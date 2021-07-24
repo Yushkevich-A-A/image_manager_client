@@ -1,0 +1,7 @@
+.gallery-container {
+  padding-left: 30px;
+  padding-right: 30px;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+}

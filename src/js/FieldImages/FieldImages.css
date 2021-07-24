@@ -1,0 +1,28 @@
+.container-img {
+  position: relative;
+  margin-bottom: 20px;
+  display: inline-block;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.img {
+  width: 200px;
+}
+
+.remove-button {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #818181;
+  border-radius: 15px;
+  background-color: white;
+  top: calc(0px - 15px);
+  right: calc(0px - 15px);
+}
+
+.remove-button::after {
+  content: 'X';
+  font-size: 12px;
+}
+

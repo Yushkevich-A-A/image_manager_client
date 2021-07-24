@@ -1,6 +1,7 @@
 * {
   list-style-type: none;
-  color: #a5a5a5;
+  text-decoration: none;
+  color: #818181;
   padding: 0px;
   margin: 0;
   box-sizing: border-box;
@@ -12,8 +13,5 @@
 }
 
 body {
-  background: url('./../image/patternbg.png');
-  height: 100%;
-  display: flex;
-  justify-content: center;
+  background: url('/src/image/patternbg.png');
 }
