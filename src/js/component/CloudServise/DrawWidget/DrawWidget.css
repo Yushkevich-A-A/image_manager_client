@@ -1,0 +1,49 @@
+.widget {
+    margin-top: 50px;
+    width: 600px;
+  }
+  
+  .download-field {
+    background-color: #ffffff;
+    padding: 10px;
+    border: 1px solid #a8b0b9;
+    border-radius: 15px;
+  }
+  
+  .main-title {
+    margin-bottom: 15px;
+    margin-left: 15px;
+  }
+  
+  .item {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .item:nth-child(n + 2) {
+    margin-top: 10px;
+  }
+  
+  .name-file {
+    width: 50%;
+  }
+  
+  .download {
+    width: 15%;
+  }
+  
+  .download::after {
+    content: "Kb"
+  }
+  
+  .link:hover {
+    color: #ffbb00;
+  }
+  
+  .amount-download {
+    margin-top: 15px;
+  }
+  
+  .downloaded::after {
+    content: "Mb";
+  }
