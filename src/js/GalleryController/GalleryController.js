@@ -34,12 +34,12 @@ export default class GalleryController {
       event.preventDefault();
       const form = event.target.closest('.form')
       console.log(event)
-      this.uploadFile(form);
+      this.uploadFile({ target: event.dataTransfer });
     });
 
     this.input.addEventListener('input', (event) => {
       const form = event.target.closest('.form')
-      this.uploadFile(form, event.target);
+      this.uploadFile(event);
     });
 
     document.addEventListener('click', (event) => {
@@ -63,7 +63,15 @@ export default class GalleryController {
   }
 
   uploadFile(value, element) {
-    const formData = new FormData(value);
+    const { target, type } = value;
+
+    const file = target.files && target.files[0];
+
+    if (!file) {
+      return;
+    }
+    const formData = new FormData();
+    formData.append('file', file);
     formData.append('method', 'addImage');
     console.log(formData.get('file'));
     const xhr = new XMLHttpRequest();
