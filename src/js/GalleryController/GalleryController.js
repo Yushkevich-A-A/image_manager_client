@@ -11,6 +11,7 @@ export default class GalleryController {
 
   init() {
     this.drawGalleryContainer();
+    this.getAllFiles()
     this.addListeners();
   }
 
@@ -31,40 +32,79 @@ export default class GalleryController {
 
     this.wrapper.addEventListener('drop', (event) => {
       event.preventDefault();
-      this.uploadFile({ target: event.dataTransfer });
+      const form = event.target.closest('.form')
+      console.log(event)
+      this.uploadFile(form);
     });
 
     this.input.addEventListener('input', (event) => {
-      this.uploadFile(event);
+      const form = event.target.closest('.form')
+      this.uploadFile(form, event.target);
     });
 
     document.addEventListener('click', (event) => {
+
       if (event.target.closest('.button')) {
         this.checkValidityURL();
       }
 
       if (event.target.closest('.remove-button')) {
-        this.GalleryContainer.removeChild(event.target.closest('.container-img'));
+        const imgContainer = event.target.closest('.container-img');
+        const containerID = imgContainer.dataset.id;
+        this.deleteImg(containerID, imgContainer);
       }
     });
   }
 
-  uploadFile(value) {
-    const { target, type } = value;
-
-    const file = target.files && target.files[0];
-
-    if (!file) {
-      return;
+  drawAllImages(data) {
+    for(let i of data) {
+      new FieldImages(`http://localhost:7070/${i}`, i);
     }
+  }
 
-    const reader = new FileReader();
-    reader.addEventListener('load', (event) => {
-      const content = event.target.result;
-      new FieldImages(content, 'картинка');
-      this.input.value = '';
+  uploadFile(value, element) {
+    const formData = new FormData(value);
+    formData.append('method', 'addImage');
+    console.log(formData.get('file'));
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost:7070/')
+    xhr.addEventListener('load', () => {
+      if (element) {
+        element.value = '';
+      }
+      new FieldImages(`http://localhost:7070/${xhr.responseText}`, xhr.responseText);
     });
 
-    reader.readAsDataURL(file);
+    xhr.send(formData);
   }
+
+  getAllFiles() {
+    const method = 'getAllImages';
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `http://localhost:7070/?method=${method}`);
+
+    xhr.addEventListener('load', () => {
+      const arrData = JSON.parse(xhr.responseText);
+      this.drawAllImages(arrData)
+    });
+    xhr.send();
+  }
+
+  deleteImg(value, element) {
+    const formData = new FormData();
+    formData.append('method', 'deleteImage');
+    formData.append('fileId', value);
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost:7070/')
+
+    xhr.responseType = 'json'
+
+    xhr.addEventListener('load', () => {
+      if (xhr.response) {
+        this.GalleryContainer.removeChild(element);
+      }
+    });
+
+    xhr.send(formData);
+}
 }

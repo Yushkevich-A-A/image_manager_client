@@ -1,5 +1,6 @@
 export default class FieldImages {
-  constructor(src, alterText = 'изображение') {
+  constructor(src, id, alterText = 'изображение') {
+    this.id = id;
     this.src = src;
     this.img = document.createElement('img');
     this.alterText = alterText;
@@ -11,6 +12,7 @@ export default class FieldImages {
   drawBlockImage() {
     this.imageDiv = document.createElement('div');
     this.imageDiv.classList.add('container-img');
+    this.imageDiv.dataset.id = this.id;
 
     this.img.src = this.src;
     this.img.classList.add('img');

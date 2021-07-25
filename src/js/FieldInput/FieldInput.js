@@ -10,7 +10,7 @@ export default class FieldInput {
     this.form = document.createElement('form');
     this.form.classList.add('form');
     this.form.innerHTML = `<div class="input-container name-container">
-                            <input  type="file" class="input file" id="file"> 
+                            <input  type="file" class="input file" name="file"> 
                           </div>
                           <div class="wrapper-input">
                               <span class="inner-text">
