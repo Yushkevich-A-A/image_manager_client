@@ -1,0 +1,1 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/kw4h5qt2gvy9jm8n?svg=true)](https://ci.appveyor.com/project/Yushkevich-A-A/image-manager-client)

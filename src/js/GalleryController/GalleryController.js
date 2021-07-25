@@ -1,3 +1,6 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-param-reassign */
+
 import FieldImages from '../FieldImages/FieldImages';
 
 export default class GalleryController {
@@ -11,7 +14,7 @@ export default class GalleryController {
 
   init() {
     this.drawGalleryContainer();
-    this.getAllFiles()
+    this.getAllFiles();
     this.addListeners();
   }
 
@@ -32,18 +35,17 @@ export default class GalleryController {
 
     this.wrapper.addEventListener('drop', (event) => {
       event.preventDefault();
-      const form = event.target.closest('.form')
-      console.log(event)
+      const form = event.target.closest('.form');
+      console.log(event);
       this.uploadFile({ target: event.dataTransfer });
     });
 
     this.input.addEventListener('input', (event) => {
-      const form = event.target.closest('.form')
+      const form = event.target.closest('.form');
       this.uploadFile(event);
     });
 
     document.addEventListener('click', (event) => {
-
       if (event.target.closest('.button')) {
         this.checkValidityURL();
       }
@@ -57,8 +59,8 @@ export default class GalleryController {
   }
 
   drawAllImages(data) {
-    for(let i of data) {
-      new FieldImages(`http://localhost:7070/${i}`, i);
+    for (const i of data) {
+      new FieldImages(`https://imageloadmanger.herokuapp.com/${i}`, i);
     }
   }
 
@@ -75,12 +77,12 @@ export default class GalleryController {
     formData.append('method', 'addImage');
     console.log(formData.get('file'));
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:7070/')
+    xhr.open('POST', 'https://imageloadmanger.herokuapp.com/');
     xhr.addEventListener('load', () => {
       if (element) {
         element.value = '';
       }
-      new FieldImages(`http://localhost:7070/${xhr.responseText}`, xhr.responseText);
+      new FieldImages(`https://imageloadmanger.herokuapp.com/${xhr.responseText}`, xhr.responseText);
     });
 
     xhr.send(formData);
@@ -89,11 +91,11 @@ export default class GalleryController {
   getAllFiles() {
     const method = 'getAllImages';
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `http://localhost:7070/?method=${method}`);
+    xhr.open('GET', `https://imageloadmanger.herokuapp.com/?method=${method}`);
 
     xhr.addEventListener('load', () => {
       const arrData = JSON.parse(xhr.responseText);
-      this.drawAllImages(arrData)
+      this.drawAllImages(arrData);
     });
     xhr.send();
   }
@@ -103,9 +105,9 @@ export default class GalleryController {
     formData.append('method', 'deleteImage');
     formData.append('fileId', value);
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:7070/')
+    xhr.open('POST', 'https://imageloadmanger.herokuapp.com/');
 
-    xhr.responseType = 'json'
+    xhr.responseType = 'json';
 
     xhr.addEventListener('load', () => {
       if (xhr.response) {
@@ -114,5 +116,5 @@ export default class GalleryController {
     });
 
     xhr.send(formData);
-}
+  }
 }
